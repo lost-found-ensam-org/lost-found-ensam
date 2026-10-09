@@ -25,8 +25,13 @@
         </a>
         <ul class="navbar-nav">
             <li><a href="/accueil" {% if active_page == 'accueil' %}class="active"{% endif %}><i class="fas fa-home"></i> Accueil</a></li>
+            {% if user %}
+            <li><span style="color: #4b5563; font-weight: 600;"><i class="fas fa-user-circle"></i> {{ user.prenom }} {{ user.nom }}</span></li>
+            <li><a href="/deconnexion"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            {% else %}
             <li><a href="#" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
             <li><a href="#" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
+            {% endif %}
         </ul>
     </nav>
 

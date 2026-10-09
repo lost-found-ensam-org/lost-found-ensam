@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
         emailInput.addEventListener("input", function() {
             if (this.value === "") {
                 this.setCustomValidity("");
-            } else if (!this.value.endsWith("um.ac.ma")) {
-                this.setCustomValidity("Veuillez utiliser votre adresse institutionnelle se terminant par um.ac.ma");
+            } else if (!this.value.endsWith("um5.ac.ma")) {
+                this.setCustomValidity("Veuillez utiliser votre adresse institutionnelle se terminant par um5.ac.ma");
             } else {
                 this.setCustomValidity("");
             }

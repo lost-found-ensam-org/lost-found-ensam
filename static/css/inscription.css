@@ -152,6 +152,21 @@
     margin-bottom: 1.6rem;
 }
 
+/* Bannière d'erreur utilisateur */
+.alert-error {
+    background-color: #fef2f2;
+    border-left: 4px solid #c0392b;
+    color: #991b1b;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    animation: fadeSlideIn 0.3s ease-out;
+}
+
 /* Grille 2 colonnes pour les champs */
 .form-grid {
     display: grid;

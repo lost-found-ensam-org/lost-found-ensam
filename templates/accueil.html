@@ -1,30 +1,42 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Accueil - Lost & Found ENSAM</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <header>
-        <h1><a href="/accueil">Lost & Found ENSAM Rabat</a></h1>
-        <div class="user-badge">
-            {{ user.prenom }} {{ user.nom }} | <a href="/" style="color: #edf2f7; text-decoration: underline;">Déconnexion</a>
-        </div>
-    </header>
+{% extends "base.html" %}
 
-    <div class="container" style="text-align: center;">
-        <h2>Que souhaitez-vous signaler ?</h2>
-        <p style="color: #718096; margin-top: 0.5rem;">Sélectionnez une option pour publier une annonce.</p>
+{% block title %}Accueil - Lost & Found ENSAM{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/style.css">
+<style>
+    .page-main {
+        background-color: #f4f6f9;
+        flex: 1;
+        padding: 3rem 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page-main">
+    <div class="container" style="text-align: center; margin: 0 auto; padding-top: 2rem;">
+        <h2 style="font-size: 2rem; color: #1a365d; margin-bottom: 0.5rem;">Que souhaitez-vous signaler, {{ user.prenom }} ?</h2>
+        <p style="color: #718096; margin-bottom: 3rem;">Sélectionnez une option pour publier une annonce sur le campus.</p>
 
         <div class="hub-grid">
             <a href="/perdu" class="hub-card card-perdu">
+                <i class="fas fa-search" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
                 J'ai perdu un objet
             </a>
             <a href="/trouve" class="hub-card card-trouve">
+                <i class="fas fa-box-open" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
                 J'ai trouvé un objet
             </a>
         </div>
+
+        <div style="margin-top: 4rem; text-align: left;">
+            <h3 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">Objets récents signalés</h3>
+            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; color: #a0aec0;">
+                <p>Aucune annonce pour le moment.</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">(Bientôt, les objets perdus et trouvés s'afficheront ici !)</p>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</main>
+{% endblock %}

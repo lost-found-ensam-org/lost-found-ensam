@@ -59,33 +59,40 @@
     <section class="center-panel">
         <div class="form-card" id="form-container">
             <!-- Formulaire d'inscription -->
-            <div id="form-inscription" class="form-view active-view">
+            <div id="form-inscription" class="form-view active-view" style="display: {% if active_view == 'connexion' %}none{% else %}block{% endif %};">
                 <h2>Créer un <span>compte</span></h2>
                 <p class="form-subtitle">Rejoignez la plateforme Lost &amp; Found ENSAM Rabat</p>
 
-                <form action="/accueil" method="get">
+                {% if error_inscription %}
+                <div class="alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>{{ error_inscription }}</span>
+                </div>
+                {% endif %}
+
+                <form action="/inscription" method="post">
                     <div class="form-grid">
                         <div class="input-group">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="nom" name="nom" placeholder="Nom" required>
+                            <input type="text" id="nom" name="nom" placeholder="Nom" value="{{ nom or '' }}" required>
                         </div>
                         <div class="input-group">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+                            <input type="text" id="prenom" name="prenom" placeholder="Prénom" value="{{ prenom or '' }}" required>
                         </div>
                         <div class="input-group">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" name="email" placeholder="E-mail institutionnel (@um5.ac.ma)" pattern="^.+@.*um\.ac\.ma$" title="Seules les adresses se terminant par um.ac.ma sont acceptées" required>
+                            <input type="email" id="email" name="email" placeholder="E-mail institutionnel (@um5.ac.ma)" value="{{ email or '' }}" pattern="^.+@.*um5\.ac\.ma$" title="Seules les adresses se terminant par um5.ac.ma sont acceptées" required>
                         </div>
                         <div class="input-group">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="tel" name="tel" placeholder="Numéro de téléphone" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                            <input type="tel" id="tel" name="tel" placeholder="Numéro de téléphone" value="{{ tel or '' }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                         </div>
                     </div>
 
                     <div class="input-group input-group--full">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                        <input type="password" id="password" name="password" placeholder="Mot de passe (min. 6 caractères)" minlength="6" required>
                         <button type="button" class="toggle-pw" onclick="togglePassword('password', 'pwIcon')" aria-label="Afficher/masquer le mot de passe">
                             <i class="fas fa-eye-slash" id="pwIcon"></i>
                         </button>
@@ -102,14 +109,21 @@
             </div>
 
             <!-- Formulaire de connexion -->
-            <div id="form-connexion" class="form-view" style="display: none;">
+            <div id="form-connexion" class="form-view" style="display: {% if active_view == 'connexion' %}block{% else %}none{% endif %};">
                 <h2>Se <span>connecter</span></h2>
                 <p class="form-subtitle">Accédez à votre compte Lost &amp; Found</p>
 
-                <form action="/accueil" method="get">
+                {% if error_connexion %}
+                <div class="alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>{{ error_connexion }}</span>
+                </div>
+                {% endif %}
+
+                <form action="/connexion" method="post">
                     <div class="input-group input-group--full">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="login-email" name="email" placeholder="E-mail institutionnel (@um5.ac.ma)" required>
+                        <input type="email" id="login-email" name="email" placeholder="E-mail institutionnel (@um5.ac.ma)" value="{{ login_email or '' }}" required>
                     </div>
 
                     <div class="input-group input-group--full">
