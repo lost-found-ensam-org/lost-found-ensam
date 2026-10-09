@@ -212,6 +212,28 @@
 
 .toggle-pw:hover { color: #374151; }
 
+/* Cacher l'icône oeil native (Edge/IE) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+/* Animations transition formulaire */
+.form-view {
+    animation: fadeSlideIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Bouton S'inscrire */
 .btn-submit {
     display: flex;
