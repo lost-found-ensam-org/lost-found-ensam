@@ -6,7 +6,6 @@ from starlette.middleware.sessions import SessionMiddleware
 from sqlalchemy.orm import Session
 from typing import cast
 import bcrypt
-import os
 
 from database import engine, get_db
 import models
@@ -16,11 +15,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Lost & Found ENSAM Rabat")
 
-session_secret = os.environ.get("SESSION_SECRET_KEY")
-if not session_secret:
-    raise RuntimeError("La variable d'environnement SESSION_SECRET_KEY est requise.")
-
-app.add_middleware(SessionMiddleware, secret_key=session_secret)
+app.add_middleware(SessionMiddleware, secret_key="ensam-rabat-lost-found-secret-key-2026")
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
