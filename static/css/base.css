@@ -1,0 +1,111 @@
+/* ═══════════════════════════════════════
+   base.css  —  Styles partagés (navbar, footer, reset)
+   Lost & Found ENSAM Rabat
+═══════════════════════════════════════ */
+
+/* ── Reset & Base ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Navbar ── */
+.navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e8eaed;
+    padding: 0 2.5rem;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    z-index: 100;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    text-decoration: none;
+}
+
+.navbar-brand img {
+    height: 52px;
+    width: 52px;
+    object-fit: contain;
+}
+
+.brand-text h1 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.2;
+}
+
+.brand-text h1 span { color: #c0392b; }
+
+.brand-text p {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.navbar-nav a {
+    text-decoration: none;
+    color: #374151;
+    font-size: 0.92rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+    padding-bottom: 4px;
+}
+
+.navbar-nav a.active {
+    color: #c0392b;
+    border-bottom: 2px solid #c0392b;
+    font-weight: 600;
+}
+
+.navbar-nav a:hover { color: #c0392b; }
+
+/* ── Footer ── */
+.footer {
+    background: #1a1a2e;
+    color: #9ca3af;
+    padding: 0 2.5rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+}
+
+.footer .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #d1d5db;
+}
+
+.footer .sep { color: #4b5563; }
+
+/* ── Responsive navbar ── */
+@media (max-width: 900px) {
+    .navbar { padding: 0 1.2rem; }
+    .navbar-nav { gap: 1rem; }
+}
+

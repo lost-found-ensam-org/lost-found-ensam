@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Objet Trouvé - Lost & Found ENSAM</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/accueil">Lost & Found ENSAM Rabat</a></h1>
+        <a href="/accueil" style="color: white; text-decoration: none;">← Retour</a>
+    </header>
+
+    <div class="container">
+        <h2 style="margin-bottom: 1.5rem;">Déclarer un objet trouvé</h2>
+        <form action="/accueil" method="get">
+            <div class="form-group">
+                <label for="nom_objet">Nom de l'objet</label>
+                <input type="text" id="nom_objet" name="nom_objet" placeholder="Ex: Trousseau de clés" required>
+            </div>
+            <div class="form-group">
+                <label for="categorie">Catégorie</label>
+                <select id="categorie" name="categorie">
+                    <option value="carte">Carte étudiante / Documents</option>
+                    <option value="electronique">Téléphone / Chargeur / Écouteurs</option>
+                    <option value="cles">Clés</option>
+                    <option value="sac">Sac / Portefeuille</option>
+                    <option value="vetement">Vêtement</option>
+                    <option value="autre">Autre matériel</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="lieu">Lieu de découverte</label>
+                <input type="text" id="lieu" name="lieu" placeholder="Ex: Salle B12" required>
+            </div>
+            <div class="form-group">
+                <label for="date_trouve">Date de découverte</label>
+                <input type="date" id="date_trouve" name="date_trouve" required>
+            </div>
+            <div class="form-group">
+                <label for="lieu_garde">Lieu où l'objet est déposé / conservé</label>
+                <input type="text" id="lieu_garde" name="lieu_garde" placeholder="Ex: Déposé auprès du surveillant général" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="photo">Photo de l'objet</label>
+                <input type="file" id="photo" name="photo">
+            </div>
+            <button type="submit" class="btn-submit" style="background-color: #276749;">Publier l'objet trouvé</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Lost & Found ENSAM Rabat{% endblock %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles de base (navbar, footer, reset) -->
+    <link rel="stylesheet" href="/static/css/base.css">
+    <!-- Styles spécifiques à la page -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <img src="/static/images/logo.png" alt="Logo ENSAM Rabat">
+            <div class="brand-text">
+                <h1>Lost &amp; Found <span>ENSAM Rabat</span></h1>
+                <p>Ensemble pour une ENSAM plus solidaire</p>
+            </div>
+        </a>
+        <ul class="navbar-nav">
+            <li><a href="/accueil" {% if active_page == 'accueil' %}class="active"{% endif %}><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="#" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="#" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ═══ CONTENU DE LA PAGE ═══ -->
+    {% block content %}{% endblock %}
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="footer-left">
+            <strong style="color:#fff;">Lost &amp; Found ENSAM Rabat</strong>
+            <span class="sep">|</span>
+            <span>Plateforme d'entraide étudiante</span>
+        </div>
+        <span>&copy; 2026 ENSAM Rabat. Tous droits réservés.</span>
+    </footer>
+
+    <!-- Scripts spécifiques à la page -->
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>
+

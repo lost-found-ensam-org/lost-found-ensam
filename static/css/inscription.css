@@ -1,0 +1,267 @@
+/* ═══════════════════════════════════════
+   inscription.css  —  Styles page inscription
+   Lost & Found ENSAM Rabat
+═══════════════════════════════════════ */
+
+/* ── Layout principal (grille 2 lignes) ── */
+.page-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    min-height: calc(100vh - 72px - 52px);
+}
+
+/* ── Panneau gauche ── */
+.left-panel {
+    grid-column: 1;
+    grid-row: 1;
+    background: linear-gradient(160deg, #f8f9fb 60%, #eef0f4 100%);
+    padding: 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-panel .headline {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+}
+
+.left-panel .headline .accent { color: #c0392b; }
+
+.red-bar {
+    width: 60px;
+    height: 5px;
+    background: #c0392b;
+    border-radius: 2px;
+    margin: 1rem 0 1.4rem;
+}
+
+.left-panel .subtitle {
+    font-size: 1.1rem;
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+/* Feature list */
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+}
+
+.feature-icon {
+    width: 46px;
+    height: 46px;
+    background: #fff0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-icon i {
+    color: #c0392b;
+    font-size: 1.05rem;
+}
+
+.feature-text strong {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.feature-text span {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.tagline {
+    margin-top: 3rem;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    color: #374151;
+    line-height: 1.35;
+}
+
+/* ── Photo ENSAM (droite) ── */
+.right-panel {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+.right-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* ── Panneau formulaire (bas, pleine largeur) ── */
+.center-panel {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+    background: #f0f2f5;
+}
+
+.form-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    padding: 2.5rem 3rem;
+    width: 70%;
+    max-width: 1000px;
+}
+
+.form-card h2 {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 0.3rem;
+}
+
+.form-card h2 span { color: #c0392b; }
+
+.form-card .form-subtitle {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 1.6rem;
+}
+
+/* Grille 2 colonnes pour les champs */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin-bottom: 0.9rem;
+}
+
+.form-grid .input-group { margin-bottom: 0; }
+
+.input-group--full { margin-bottom: 0.9rem; }
+
+/* Champs de saisie */
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0 0.9rem;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 0.9rem;
+}
+
+.input-group:focus-within {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.12);
+}
+
+.input-group i {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    width: 18px;
+    flex-shrink: 0;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0.75rem 0.6rem;
+    font-size: 0.92rem;
+    color: #374151;
+    background: transparent;
+}
+
+.input-group input::placeholder { color: #9ca3af; }
+
+.toggle-pw {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #9ca3af;
+    padding: 0;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.toggle-pw:hover { color: #374151; }
+
+/* Bouton S'inscrire */
+.btn-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.85rem;
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.4rem;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.02em;
+}
+
+.btn-submit:hover {
+    background: #a93226;
+    transform: translateY(-1px);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 1.1rem;
+    font-size: 0.87rem;
+    color: #6b7280;
+}
+
+.login-link a {
+    color: #c0392b;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .page-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    .left-panel  { grid-column: 1; grid-row: 1; padding: 2rem 1.5rem; }
+    .right-panel { grid-column: 1; grid-row: 2; min-height: 220px; }
+    .center-panel { grid-column: 1; grid-row: 3; }
+    .form-card { width: 95%; padding: 1.5rem; }
+    .form-grid { grid-template-columns: 1fr; }
+}
+

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription - Lost & Found ENSAM Rabat{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/inscription.css">
+{% endblock %}
+
+{% block content %}
+<main class="page-main">
+
+    <!-- Panneau gauche : présentation -->
+    <section class="left-panel">
+        <h2 class="headline">
+            Retrouvez<br>
+            vos objets perdus<br>
+            <span class="accent">facilement</span>
+        </h2>
+        <div class="red-bar"></div>
+        <p class="subtitle">
+            Une plateforme d'entraide entre<br>
+            étudiants, pour une ENSAM plus<br>
+            solidaire.
+        </p>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-search"></i></div>
+                <div class="feature-text">
+                    <strong>Signalez un objet perdu</strong>
+                    <span>En quelques clics</span>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-users"></i></div>
+                <div class="feature-text">
+                    <strong>Aidez vos camarades</strong>
+                    <span>En retrouvant leurs objets</span>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="feature-text">
+                    <strong>Une communauté solidaire</strong>
+                    <span>Pour une vie étudiante meilleure</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="tagline">Plus qu'une école,<br>une famille</p>
+    </section>
+
+    <!-- Photo ENSAM (droite) -->
+    <section class="right-panel">
+        <img src="/static/images/ensam_photo.png" alt="ENSAM Rabat - École Nationale Supérieure d'Arts et Métiers">
+    </section>
+
+    <!-- Formulaire d'inscription (bas, pleine largeur) -->
+    <section class="center-panel">
+        <div class="form-card">
+            <h2>Créer un <span>compte</span></h2>
+            <p class="form-subtitle">Rejoignez la plateforme Lost &amp; Found ENSAM Rabat</p>
+
+            <form action="/accueil" method="get">
+
+                <div class="form-grid">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="nom" name="nom" placeholder="Nom" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" placeholder="E-mail institutionnel (@ensam-rabat...)" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="tel" name="tel" placeholder="Numéro de téléphone" required>
+                    </div>
+                </div>
+
+                <div class="input-group input-group--full">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+                    <button type="button" class="toggle-pw" onclick="togglePassword()" aria-label="Afficher/masquer le mot de passe">
+                        <i class="fas fa-eye-slash" id="pwIcon"></i>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    S'inscrire <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <p class="login-link">
+                Vous avez déjà un compte ? <a href="#">Se connecter</a>
+            </p>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/inscription.js"></script>
+{% endblock %}
