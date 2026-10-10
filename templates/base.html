@@ -24,15 +24,19 @@
             </div>
         </a>
         <ul class="navbar-nav">
-            <li><a href="/accueil" {% if active_page == 'accueil' %}class="active"{% endif %}><i class="fas fa-home"></i> Accueil</a></li>
             {% if user %}
+            <li><a href="/accueil" {% if active_page == 'accueil' %}class="active"{% endif %}><i class="fas fa-home"></i> Accueil</a></li>
             <li><a href="/annonces" {% if active_page == 'annonces' %}class="active"{% endif %}><i class="fas fa-list-alt"></i> Annonces</a></li>
             <li><a href="/mes-annonces" {% if active_page == 'mes_annonces' %}class="active"{% endif %}><i class="fas fa-folder-open"></i> Mes annonces</a></li>
+            <li><a href="/a-propos" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="/contact" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
             <li><span style="color: #4b5563; font-weight: 600;"><i class="fas fa-user-circle"></i> {{ user.prenom }} {{ user.nom }}</span></li>
             <li><a href="/deconnexion"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             {% else %}
-            <li><a href="#" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
-            <li><a href="#" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="/" {% if active_page == 'accueil' %}class="active"{% endif %}><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="/a-propos" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="/contact" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="/" class="btn-nav-login" style="background: #c0392b; color: #fff !important; padding: 6px 14px; border-radius: 6px; font-weight: 600; text-decoration: none;"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
             {% endif %}
         </ul>
     </nav>
@@ -46,6 +50,10 @@
             <strong style="color:#fff;">Lost &amp; Found ENSAM Rabat</strong>
             <span class="sep">|</span>
             <span>Plateforme d'entraide étudiante</span>
+            <span class="sep">|</span>
+            <a href="/a-propos" style="color: #9ca3af; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">À propos</a>
+            <span class="sep">|</span>
+            <a href="/contact" style="color: #9ca3af; text-decoration: none;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">Contact WhatsApp</a>
         </div>
         <span>&copy; 2026 ENSAM Rabat. Tous droits réservés.</span>
     </footer>

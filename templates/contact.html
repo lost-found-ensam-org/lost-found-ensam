@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Administrateurs - Lost & Found ENSAM Rabat{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/pages.css">
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+
+    <!-- ═══ HERO SECTION ═══ -->
+    <div class="hero-section">
+        <span class="hero-badge"><i class="fab fa-whatsapp"></i> Équipe d'Administration &amp; Support</span>
+        <h1 class="hero-title">Contacter les Administrateurs</h1>
+        <p class="hero-subtitle">
+            Une question sur la plateforme, un problème technique, besoin d'aide pour une annonce 
+            ou pour sécuriser un objet de valeur ? Contactez directement l'un des étudiants administrateurs sur WhatsApp.
+        </p>
+    </div>
+
+    <!-- ═══ CARTES DES 3 ADMINISTRATEURS ═══ -->
+    <div class="section-header">
+        <h2>Équipe de Support ENSAM</h2>
+        <p>Cliquez sur le bouton vert pour démarrer directement une discussion WhatsApp</p>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="admins-grid">
+        {% for admin in admins %}
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <div class="admin-avatar" style="background-color: {{ admin.avatar_color }};">
+                    {{ admin.initiales }}
+                </div>
+                <h3 class="admin-name">{{ admin.nom }}</h3>
+                <p class="admin-role">{{ admin.role }}</p>
+                <span class="admin-badge">{{ admin.badge }}</span>
+            </div>
+
+            <div class="admin-card-body">
+                <div>
+                    <div class="admin-info-row">
+                        <i class="fas fa-phone-alt"></i>
+                        <span class="admin-phone-text">{{ admin.tel_format }}</span>
+                    </div>
+
+                    <div class="admin-status">
+                        <i class="fas fa-circle"></i> Disponible sur WhatsApp
+                    </div>
+                </div>
+
+                <a href="{{ admin.whatsapp_url }}" target="_blank" rel="noopener noreferrer" class="btn-admin-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Contacter {{ admin.nom }} sur WhatsApp
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ═══ BOÎTE D'INFORMATIONS SUPPORT ═══ -->
+    <div class="support-info-box">
+        <h3><i class="fas fa-info-circle"></i> Quand contacter l'équipe d'administration ?</h3>
+        <div class="support-reasons">
+            <div class="reason-item">
+                <strong><i class="fas fa-gem" style="color: #2563eb;"></i> Objets sensibles</strong>
+                <span>Papiers d'identité (CIN, passeport), cartes bancaires, gros montants ou matériel coûteux nécessitant une remise au gardiennage/administration.</span>
+            </div>
+
+            <div class="reason-item">
+                <strong><i class="fas fa-shield-alt" style="color: #c0392b;"></i> Signalement &amp; Modération</strong>
+                <span>Si vous remarquez une annonce suspecte, un numéro erroné ou une publication non conforme aux règles de vie de l'école.</span>
+            </div>
+
+            <div class="reason-item">
+                <strong><i class="fas fa-key" style="color: #d97706;"></i> Problème d'accès</strong>
+                <span>Difficultés pour vous connecter avec votre adresse académique institutionnelle <em>@um5.ac.ma</em>.</span>
+            </div>
+
+            <div class="reason-item">
+                <strong><i class="fas fa-lightbulb" style="color: #059669;"></i> Suggestions d'évolution</strong>
+                <span>Des idées pour améliorer la plateforme Lost &amp; Found ENSAM Rabat ? Vos retours sont les bienvenus !</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

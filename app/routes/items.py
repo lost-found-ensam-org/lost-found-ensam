@@ -264,3 +264,66 @@ def supprimer_annonce(
     delete_user_item(db, item_id=item_id, user_id=user.id)
     return RedirectResponse(url="/mes-annonces?success=deleted", status_code=303)
 
+
+# ── Liste des contacts Administrateurs ENSAM ──
+ADMIN_CONTACTS = [
+    {
+        "nom": "Bilal",
+        "role": "Administrateur & Support Technique",
+        "tel": "0679506233",
+        "tel_format": "06 79 50 62 33",
+        "whatsapp_url": "https://wa.me/212679506233?text=Bonjour%20Bilal,%20je%20vous%20contacte%20concernant%20la%20plateforme%20Lost%20%26%20Found%20ENSAM",
+        "badge": "Support & Dev",
+        "avatar_color": "#c0392b",
+        "initiales": "B"
+    },
+    {
+        "nom": "Adnane",
+        "role": "Administrateur & Modération",
+        "tel": "0603757147",
+        "tel_format": "06 03 75 71 47",
+        "whatsapp_url": "https://wa.me/212603757147?text=Bonjour%20Adnane,%20je%20vous%20contacte%20concernant%20la%20plateforme%20Lost%20%26%20Found%20ENSAM",
+        "badge": "Modération",
+        "avatar_color": "#2563eb",
+        "initiales": "A"
+    },
+    {
+        "nom": "Othmane",
+        "role": "Administrateur & Assistance Étudiante",
+        "tel": "0641696978",
+        "tel_format": "06 41 69 69 78",
+        "whatsapp_url": "https://wa.me/212641696978?text=Bonjour%20Othmane,%20je%20vous%20contacte%20concernant%20la%20plateforme%20Lost%20%26%20Found%20ENSAM",
+        "badge": "Relations Étudiants",
+        "avatar_color": "#059669",
+        "initiales": "O"
+    }
+]
+
+
+@router.get("/a-propos")
+@router.get("/apropos")
+def page_a_propos(request: Request, db: Session = Depends(get_db)):
+    user = get_current_user(request, db)
+    return templates.TemplateResponse(
+        request=request,
+        name="a_propos.html",
+        context={
+            "user": user,
+            "active_page": "apropos"
+        }
+    )
+
+
+@router.get("/contact")
+def page_contact(request: Request, db: Session = Depends(get_db)):
+    user = get_current_user(request, db)
+    return templates.TemplateResponse(
+        request=request,
+        name="contact.html",
+        context={
+            "user": user,
+            "admins": ADMIN_CONTACTS,
+            "active_page": "contact"
+        }
+    )
+

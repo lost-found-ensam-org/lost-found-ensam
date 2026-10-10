@@ -58,7 +58,7 @@ body {
 .navbar-nav {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.25rem;
     list-style: none;
 }
 

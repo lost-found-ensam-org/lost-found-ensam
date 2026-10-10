@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}À propos - Lost & Found ENSAM Rabat{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/pages.css">
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+
+    <!-- ═══ HERO SECTION ═══ -->
+    <div class="hero-section">
+        <span class="hero-badge"><i class="fas fa-university"></i> Plateforme Étudiante ENSAM Rabat</span>
+        <h1 class="hero-title">À propos de Lost &amp; Found</h1>
+        <p class="hero-subtitle">
+            Une initiative collaborative pensée par et pour la communauté de l'ENSAM Rabat, 
+            afin de centraliser, sécuriser et accélérer la restitution des objets égarés au sein du campus.
+        </p>
+    </div>
+
+    <!-- ═══ POURQUOI CETTE PLATEFORME ? ═══ -->
+    <div class="section-header">
+        <h2>Pourquoi Lost &amp; Found ENSAM ?</h2>
+        <p>Finis les messages perdus dans les dizaines de groupes WhatsApp de promotion !</p>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-red">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h3>Centralisation Unique</h3>
+            <p>
+                Un point de repère unique pour toute l'école (amphis, ateliers, bibliothèque, foyers, terrains) 
+                regroupant toutes les annonces en temps réel.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-green">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Communauté 100% Vérifiée</h3>
+            <p>
+                Accès strictement réservé aux étudiants et membres de l'école via l'adresse institutionnelle 
+                <strong>@um5.ac.ma</strong>, garantissant sérieux et sécurité.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-blue">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <h3>Contact Direct &amp; Immédiat</h3>
+            <p>
+                Mise en relation directe en un clic sur WhatsApp avec l'étudiant concerné, avec un message 
+                pré-rempli mentionnant l'objet.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-wrapper feature-icon-purple">
+                <i class="fas fa-camera"></i>
+            </div>
+            <h3>Transparence &amp; Photos</h3>
+            <p>
+                La photo est obligatoire pour signaler un objet trouvé, permettant une identification rapide 
+                et réduisant les erreurs.
+            </p>
+        </div>
+    </div>
+
+    <!-- ═══ GUIDE : COMMENT BIEN UTILISER LE SITE ═══ -->
+    <div class="section-header">
+        <h2>Comment bien utiliser la plateforme ?</h2>
+        <p>Les 4 étapes simples pour déclarer, retrouver et clôturer un objet</p>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="steps-container">
+        <div class="step-card">
+            <span class="step-number">Étape 1</span>
+            <h3><i class="fas fa-search-location" style="color: #c0392b;"></i> Vous avez perdu</h3>
+            <p>
+                Rendez-vous sur <strong>"Déclarer un objet perdu"</strong>. Indiquez le lieu probable, la date 
+                et décrivez avec précision votre bien.
+            </p>
+            <div class="step-highlight">
+                <i class="fas fa-lightbulb" style="color:#d97706;"></i> <strong>Conseil :</strong> Mentionnez les marques, couleurs ou stickers distinctifs.
+            </div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-number">Étape 2</span>
+            <h3><i class="fas fa-hand-holding-heart" style="color: #059669;"></i> Vous avez trouvé</h3>
+            <p>
+                Prenez une <strong>photo claire</strong> de l'objet, indiquez où vous l'avez découvert et précisez 
+                le lieu où vous le gardez ou l'avez déposé.
+            </p>
+            <div class="step-highlight">
+                <i class="fas fa-exclamation-circle" style="color:#c0392b;"></i> <strong>Règle :</strong> La photo est obligatoire pour prouver la trouvaille.
+            </div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-number">Étape 3</span>
+            <h3><i class="fab fa-whatsapp" style="color: #25D366;"></i> Contact WhatsApp</h3>
+            <p>
+                En consultant les annonces, cliquez sur le bouton vert <strong>"Contacter"</strong> pour entamer 
+                instantanément la discussion sur WhatsApp.
+            </p>
+            <div class="step-highlight">
+                <i class="fas fa-shield-alt" style="color:#2563eb;"></i> <strong>Sécurité :</strong> Demandez une preuve (ex: déverrouillage de téléphone).
+            </div>
+        </div>
+
+        <div class="step-card">
+            <span class="step-number">Étape 4</span>
+            <h3><i class="fas fa-check-circle" style="color: #1a1a2e;"></i> Restitution &amp; Retrait</h3>
+            <p>
+                L'objet a retrouvé son propriétaire ? Rendez-vous dans <strong>"Mes annonces"</strong> et cliquez sur 
+                le bouton de retrait pour clôturer la publication.
+            </p>
+            <div class="step-highlight">
+                <i class="fas fa-broom" style="color:#4b5563;"></i> <strong>Civisme :</strong> Cela garde la liste des annonces propre et à jour !
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ BLOC D'ACTION (CTA) ═══ -->
+    <div class="cta-box">
+        <h3>Prêt à participer à la solidarité ENSAMiste ?</h3>
+        <p>Un objet perdu ou trouvé aujourd'hui ? Ne le laissez pas traîner, signalez-le tout de suite.</p>
+        <div class="cta-buttons">
+            {% if user %}
+            <a href="/annonces" class="btn-primary-cta">
+                <i class="fas fa-list-alt"></i> Voir toutes les annonces
+            </a>
+            <a href="/perdu" class="btn-secondary-cta">
+                <i class="fas fa-search"></i> Déclarer un objet perdu
+            </a>
+            <a href="/trouve" class="btn-secondary-cta">
+                <i class="fas fa-hand-holding"></i> Signaler un objet trouvé
+            </a>
+            {% else %}
+            <a href="/" class="btn-primary-cta">
+                <i class="fas fa-sign-in-alt"></i> Se connecter avec @um5.ac.ma
+            </a>
+            <a href="/contact" class="btn-secondary-cta">
+                <i class="fas fa-envelope"></i> Contacter les administrateurs
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
