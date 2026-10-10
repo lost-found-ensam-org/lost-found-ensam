@@ -8,15 +8,15 @@ class Item(Base):
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
+    title = Column(String(200), index=True)
     description = Column(Text, nullable=True)
-    category = Column(String, index=True, nullable=True)
-    location = Column(String, nullable=True)
-    item_type = Column(String, index=True)  # 'perdu' ou 'trouve'
-    image_url = Column(String, nullable=True)
-    date_event = Column(String, nullable=True)
-    color = Column(String, nullable=True)
-    location_keeper = Column(String, nullable=True)  # où l'objet est gardé pour les objets trouvés
+    category = Column(String(100), index=True, nullable=True)
+    location = Column(String(200), nullable=True)
+    item_type = Column(String(50), index=True)  # 'perdu' ou 'trouve'
+    image_url = Column(String(255), nullable=True)
+    date_event = Column(String(100), nullable=True)
+    color = Column(String(50), nullable=True)
+    location_keeper = Column(String(200), nullable=True)  # où l'objet est gardé pour les objets trouvés
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
