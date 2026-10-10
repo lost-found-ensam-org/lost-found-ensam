@@ -25,7 +25,25 @@ function toggleForms() {
     }
 }
 
-// Validation personnalisée pour l'email
+function showConnexionForm() {
+    const formInscription = document.getElementById('form-inscription');
+    const formConnexion = document.getElementById('form-connexion');
+    if (formInscription && formConnexion) {
+        formInscription.style.display = 'none';
+        formConnexion.style.display = 'block';
+    }
+}
+
+function showInscriptionForm() {
+    const formInscription = document.getElementById('form-inscription');
+    const formConnexion = document.getElementById('form-connexion');
+    if (formInscription && formConnexion) {
+        formConnexion.style.display = 'none';
+        formInscription.style.display = 'block';
+    }
+}
+
+// Validation personnalisée pour l'email et détection du hash pour scroll fluide
 document.addEventListener("DOMContentLoaded", function() {
     const emails = document.querySelectorAll('input[type="email"]');
     
@@ -40,4 +58,28 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+
+    // Détection de l'ancre #form-container ou #connexion pour scroller directement
+    const hash = window.location.hash;
+    if (hash === '#form-container' || hash === '#connexion') {
+        showConnexionForm();
+        setTimeout(() => {
+            const container = document.getElementById('form-container');
+            if (container) {
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const loginEmail = document.getElementById('login-email');
+                if (loginEmail) loginEmail.focus();
+            }
+        }, 150);
+    } else if (hash === '#inscription') {
+        showInscriptionForm();
+        setTimeout(() => {
+            const container = document.getElementById('form-container');
+            if (container) {
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const nomInput = document.getElementById('nom');
+                if (nomInput) nomInput.focus();
+            }
+        }, 150);
+    }
 });

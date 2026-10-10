@@ -30,13 +30,23 @@
             <li><a href="/mes-annonces" {% if active_page == 'mes_annonces' %}class="active"{% endif %}><i class="fas fa-folder-open"></i> Mes annonces</a></li>
             <li><a href="/a-propos" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
             <li><a href="/contact" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
-            <li><span style="color: #4b5563; font-weight: 600;"><i class="fas fa-user-circle"></i> {{ user.prenom }} {{ user.nom }}</span></li>
-            <li><a href="/deconnexion"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            <li class="nav-user-item">
+                <span class="nav-user-pill" title="{{ user.prenom }} {{ user.nom }} ({{ user.email }})">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="nav-user-name">{{ user.prenom }} {{ user.nom }}</span>
+                </span>
+            </li>
+            <li>
+                <a href="/deconnexion" class="nav-logout-btn" title="Se déconnecter">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-logout-text">Déconnexion</span>
+                </a>
+            </li>
             {% else %}
             <li><a href="/" {% if active_page == 'accueil' %}class="active"{% endif %}><i class="fas fa-home"></i> Accueil</a></li>
             <li><a href="/a-propos" {% if active_page == 'apropos' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> À propos</a></li>
             <li><a href="/contact" {% if active_page == 'contact' %}class="active"{% endif %}><i class="fas fa-envelope"></i> Contact</a></li>
-            <li><a href="/" class="btn-nav-login" style="background: #c0392b; color: #fff !important; padding: 6px 14px; border-radius: 6px; font-weight: 600; text-decoration: none;"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
+            <li><a href="/#connexion" class="btn-nav-login" onclick="handleNavLoginClick(event)"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
             {% endif %}
         </ul>
     </nav>
@@ -57,6 +67,34 @@
         </div>
         <span>&copy; 2026 ENSAM Rabat. Tous droits réservés.</span>
     </footer>
+
+    <!-- Script global pour le bouton Connexion -->
+    <script>
+    function handleNavLoginClick(event) {
+        const formContainer = document.getElementById('form-container');
+        if (formContainer) {
+            if (event) event.preventDefault();
+            if (typeof showConnexionForm === 'function') {
+                showConnexionForm();
+            } else {
+                const formInscription = document.getElementById('form-inscription');
+                const formConnexion = document.getElementById('form-connexion');
+                if (formConnexion && formInscription) {
+                    formInscription.style.display = 'none';
+                    formConnexion.style.display = 'block';
+                }
+            }
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+                const emailInput = document.getElementById('login-email');
+                if (emailInput) emailInput.focus();
+            }, 300);
+        } else {
+            // Si on est sur une autre page, naviguer vers la page d'accueil avec hash
+            window.location.href = '/#connexion';
+        }
+    }
+    </script>
 
     <!-- Scripts spécifiques à la page -->
     {% block extra_js %}{% endblock %}
