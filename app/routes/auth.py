@@ -1,3 +1,5 @@
+from typing import cast
+
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
@@ -129,7 +131,7 @@ def se_connecter(
 
     # Recherche de l'utilisateur par e-mail
     user = db.query(User).filter(User.email == email).first()
-    if not user or not verify_password(password, user.hashed_password):
+    if not user or not verify_password(password, cast(str, user.hashed_password)):
         return render_login_error("Adresse e-mail ou mot de passe incorrect.")
 
     # Connexion réussie : enregistrement en session

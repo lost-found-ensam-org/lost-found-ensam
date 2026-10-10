@@ -34,6 +34,10 @@ def page_perdu(request: Request, db: Session = Depends(get_db)):
         return RedirectResponse(url="/", status_code=303)
 
     user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        request.session.clear()
+        return RedirectResponse(url="/", status_code=303)
+
     return templates.TemplateResponse(
         request=request,
         name="perdu.html",
@@ -48,6 +52,10 @@ def page_trouve(request: Request, db: Session = Depends(get_db)):
         return RedirectResponse(url="/", status_code=303)
 
     user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        request.session.clear()
+        return RedirectResponse(url="/", status_code=303)
+
     return templates.TemplateResponse(
         request=request,
         name="trouve.html",

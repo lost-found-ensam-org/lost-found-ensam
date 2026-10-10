@@ -1,56 +1,157 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Objet Perdu - Lost & Found ENSAM</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <header>
-        <h1><a href="/accueil">Lost & Found ENSAM Rabat</a></h1>
-        <a href="/accueil" style="color: white; text-decoration: none;">← Retour</a>
-    </header>
+{% extends "base.html" %}
 
-    <div class="container">
-        <h2 style="margin-bottom: 1.5rem;">Déclarer un objet perdu</h2>
-        <form action="/accueil" method="get">
-            <div class="form-group">
-                <label for="nom_objet">Nom de l'objet</label>
-                <input type="text" id="nom_objet" name="nom_objet" placeholder="Ex: Portefeuille noir" required>
-            </div>
-            <div class="form-group">
-                <label for="categorie">Catégorie</label>
-                <select id="categorie" name="categorie">
-                    <option value="carte">Carte étudiante / Documents</option>
-                    <option value="electronique">Téléphone / Chargeur / Écouteurs</option>
-                    <option value="cles">Clés</option>
-                    <option value="sac">Sac / Portefeuille</option>
-                    <option value="vetement">Vêtement</option>
-                    <option value="autre">Autre matériel</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="lieu">Lieu supposé de la perte</label>
-                <input type="text" id="lieu" name="lieu" placeholder="Ex: Bibliothèque, Amphi A..." required>
-            </div>
-            <div class="form-group">
-                <label for="date_perte">Date de la perte</label>
-                <input type="date" id="date_perte" name="date_perte" required>
-            </div>
-            <div class="form-group">
-                <label for="couleur">Couleur</label>
-                <input type="text" id="couleur" name="couleur">
-            </div>
-            <div class="form-group">
-                <label for="description">Description détaillée</label>
-                <textarea id="description" name="description" rows="4"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="photo">Photo (facultative)</label>
-                <input type="file" id="photo" name="photo">
-            </div>
-            <button type="submit" class="btn-submit">Publier l'avis de recherche</button>
-        </form>
+{% block title %}Signaler un Objet Perdu - Lost & Found ENSAM{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/items.css">
+{% endblock %}
+
+{% block content %}
+<main class="items-main">
+    <div class="form-wrapper">
+
+        <!-- Lien de retour -->
+        <a href="/accueil" class="back-link">
+            <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+        </a>
+
+        <!-- En-tête -->
+        <div class="form-header">
+            <span class="badge-tag badge-perdu">
+                <i class="fas fa-search"></i> Objet Perdu
+            </span>
+            <h2>Signaler un objet perdu</h2>
+            <p>Renseignez les détails ci-dessous pour alerter la communauté de l'ENSAM Rabat et maximiser vos chances de le retrouver.</p>
+        </div>
+
+        <!-- Carte de formulaire -->
+        <div class="item-card">
+            <form action="/accueil" method="get">
+
+                <!-- Section 1 : Informations principales -->
+                <h3 class="form-section-title">
+                    <i class="fas fa-info-circle"></i> Informations sur l'objet
+                </h3>
+
+                <div class="field-group">
+                    <label for="nom_objet" class="field-label">
+                        Nom de l'objet <span class="required">*</span>
+                    </label>
+                    <div class="item-input-group">
+                        <i class="fas fa-tag"></i>
+                        <input type="text" id="nom_objet" name="nom_objet" placeholder="Ex: Portefeuille, Clé USB, ..." required>
+                    </div>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field-group no-mb">
+                        <label for="categorie" class="field-label">
+                            Catégorie <span class="required">*</span>
+                        </label>
+                        <div class="item-input-group">
+                            <i class="fas fa-th-large"></i>
+                            <select id="categorie" name="categorie" required>
+                                <option value="" disabled selected>Sélectionnez une catégorie</option>
+                                <option value="carte">Carte étudiante / Documents</option>
+                                <option value="electronique">Téléphone / PC / Chargeur / Écouteurs</option>
+                                <option value="cles">Clés / Badge d'accès</option>
+                                <option value="sac">Sac / Portefeuille / Trousse</option>
+                                <option value="vetement">Vêtement / Veste</option>
+                                <option value="autre">Autre matériel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group no-mb">
+                        <label for="couleur" class="field-label">Couleur principale</label>
+                        <div class="item-input-group">
+                            <i class="fas fa-palette"></i>
+                            <input type="text" id="couleur" name="couleur" placeholder="Ex: Noir, Bleu marine, ...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2 : Lieu et Date -->
+                <h3 class="form-section-title">
+                    <i class="fas fa-map-marker-alt"></i> Lieu et Date
+                </h3>
+
+                <div class="field-grid">
+                    <div class="field-group no-mb">
+                        <label for="lieu" class="field-label">
+                            Lieu supposé de la perte <span class="required">*</span>
+                        </label>
+                        <div class="item-input-group">
+                            <i class="fas fa-map-pin"></i>
+                            <input type="text" id="lieu" name="lieu" placeholder="Ex: Salle d'études, Amphi 3, L'Atelier, ..." required>
+                        </div>
+                    </div>
+
+                    <div class="field-group no-mb">
+                        <label for="date_perte" class="field-label">
+                            Date de la perte <span class="required">*</span>
+                        </label>
+                        <div class="item-input-group">
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="date" id="date_perte" name="date_perte" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3 : Détails complémentaires -->
+                <h3 class="form-section-title">
+                    <i class="fas fa-align-left"></i> Description & Photo
+                </h3>
+
+                <div class="field-group">
+                    <label for="description" class="field-label">Description détaillée</label>
+                    <textarea id="description" name="description" class="item-textarea" rows="4" placeholder="Donnez des signes distinctifs (rayures, autocollants, contenu, marque...)."></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Photo de l'objet (facultative)</label>
+                    <div class="upload-box" id="uploadBox">
+                        <input type="file" id="photo" name="photo" accept="image/*">
+                        
+                        <!-- État par défaut -->
+                        <div class="upload-placeholder" id="uploadPlaceholder">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="upload-text">Cliquez pour ajouter une photo ou glissez-la ici</div>
+                            <div class="upload-subtext">Optionnel : permet d'aider à reconnaitre l'objet (JPG, PNG, WEBP - Max 5 Mo)</div>
+                        </div>
+
+                        <!-- État après sélection avec aperçu immédiat -->
+                        <div class="upload-preview" id="uploadPreview" style="display: none;">
+                            <img id="previewImage" src="" alt="Aperçu de la photo" class="preview-thumbnail">
+                            <div class="upload-file-details">
+                                <div class="file-status" style="color: #c0392b;"><i class="fas fa-check-circle"></i> Photo sélectionnée</div>
+                                <div class="file-name" id="fileName">nom_du_fichier.jpg</div>
+                                <div class="file-size" id="fileSize">0 Ko</div>
+                                <button type="button" class="btn-remove-file" id="btnRemoveFile">
+                                    <i class="fas fa-times-circle"></i> Retirer la photo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="form-actions">
+                    <a href="/accueil" class="btn-cancel">Annuler</a>
+                    <button type="submit" class="btn-submit-item btn-perdu">
+                        <i class="fas fa-bullhorn"></i> Publier l'objet perdu
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
     </div>
-</body>
-</html>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/upload_preview.js"></script>
+{% endblock %}
