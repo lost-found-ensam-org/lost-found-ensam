@@ -454,3 +454,398 @@
     }
 }
 
+/* ═══════════════════════════════════════
+   Cartes d'annonces (Accueil & Page Annonces)
+═══════════════════════════════════════ */
+.items-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.items-section-header h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a2e;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 1.6rem;
+}
+
+.item-card-preview {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.item-card-preview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+}
+
+.item-media {
+    height: 190px;
+    position: relative;
+    background: #f8fafc;
+    overflow: hidden;
+}
+
+.item-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.item-card-preview:hover .item-media img {
+    transform: scale(1.03);
+}
+
+.item-media .no-photo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    background: #f1f5f9;
+}
+
+.item-media .no-photo i {
+    font-size: 2.2rem;
+    color: #cbd5e1;
+}
+
+.item-badge-floating {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.badge-float-perdu {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.badge-float-trouve {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.item-card-body {
+    padding: 1.3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.item-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+}
+
+.item-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.86rem;
+    color: #64748b;
+}
+
+.item-card-meta i {
+    width: 15px;
+    color: #94a3b8;
+    text-align: center;
+}
+
+.item-card-desc {
+    font-size: 0.88rem;
+    color: #475569;
+    line-height: 1.45;
+    margin-top: 0.4rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.item-card-footer {
+    padding: 0.9rem 1.3rem;
+    background: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+}
+
+.author-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #334155;
+    font-weight: 600;
+}
+
+.author-chip i {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.contact-trigger {
+    color: #c0392b;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #fee2e2;
+    transition: all 0.2s;
+}
+
+.contact-trigger:hover {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ── Lien souligné "Voir plus d'annonces" ── */
+.see-more-box {
+    text-align: center;
+    margin-top: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.see-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #c0392b;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    transition: all 0.2s ease;
+}
+
+.see-more-link:hover {
+    color: #991b1b;
+    transform: translateX(4px);
+}
+
+/* ── État vide (Aucune annonce) ── */
+.empty-state-box {
+    background: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1.5px dashed #cbd5e1;
+    color: #64748b;
+    margin-top: 1rem;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    color: #cbd5e1;
+    margin-bottom: 0.8rem;
+}
+
+.empty-state-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.3rem;
+}
+
+.empty-state-text {
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+/* ── Bouton WhatsApp ── */
+.contact-whatsapp-btn {
+    background-color: #25D366;
+    color: #ffffff !important;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.38rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    box-shadow: 0 2px 6px rgba(37, 211, 102, 0.25);
+    transition: all 0.2s ease;
+}
+
+.contact-whatsapp-btn i {
+    font-size: 1rem;
+}
+
+.contact-whatsapp-btn:hover {
+    background-color: #20ba59;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    color: #ffffff !important;
+}
+
+/* ── Badge zoom photo au survol ── */
+.zoom-hint-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.item-media:hover .zoom-hint-badge {
+    opacity: 1;
+}
+
+/* ── Modal Lightbox Photo (Plein écran avec ratio réel) ── */
+.photo-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.92);
+    backdrop-filter: blur(6px);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    animation: fadeInModal 0.2s ease-out forwards;
+}
+
+.photo-modal.active {
+    display: flex;
+}
+
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content-wrapper {
+    position: relative;
+    max-width: 95vw;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content-wrapper img {
+    max-width: 90vw;
+    max-height: 82vh;
+    object-fit: contain; /* Conserve le ratio réel de l'image sans la rogner */
+    border-radius: 12px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    background: #000;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: -46px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #ffffff;
+    font-size: 1.3rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+    background: #c0392b;
+    transform: scale(1.1);
+}
+
+.modal-caption {
+    color: #f1f5f9;
+    margin-top: 0.8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* ── Actions spécifiques à la page "Mes Annonces" ── */
+.my-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.btn-resolve-item {
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
+}
+
+.btn-resolve-item:hover {
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+
+

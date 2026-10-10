@@ -1,42 +1,225 @@
 {% extends "base.html" %}
 
-{% block title %}Accueil - Lost & Found ENSAM{% endblock %}
+{% block title %}Accueil - Lost & Found ENSAM Rabat{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/css/items.css">
 <style>
     .page-main {
         background-color: #f4f6f9;
         flex: 1;
-        padding: 3rem 1rem;
+        padding: 3rem 1.5rem;
+    }
+    .feed-container {
+        max-width: 1080px;
+        margin: 0 auto;
+    }
+    .alert-success {
+        background-color: #ecfdf5;
+        border-left: 4px solid #10b981;
+        color: #065f46;
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <main class="page-main">
-    <div class="container" style="text-align: center; margin: 0 auto; padding-top: 2rem;">
-        <h2 style="font-size: 2rem; color: #1a365d; margin-bottom: 0.5rem;">Que souhaitez-vous signaler, {{ user.prenom }} ?</h2>
-        <p style="color: #718096; margin-bottom: 3rem;">Sélectionnez une option pour publier une annonce sur le campus.</p>
+    <div class="feed-container">
 
-        <div class="hub-grid">
-            <a href="/perdu" class="hub-card card-perdu">
-                <i class="fas fa-search" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
-                J'ai perdu un objet
-            </a>
-            <a href="/trouve" class="hub-card card-trouve">
-                <i class="fas fa-box-open" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
-                J'ai trouvé un objet
-            </a>
+        <!-- Message de succès après publication -->
+        {% if request.query_params.get('success') == 'perdu' %}
+        <div class="alert-success">
+            <i class="fas fa-check-circle" style="font-size: 1.2rem;"></i>
+            <span><strong>Félicitations !</strong> Votre avis de recherche a été publié avec succès sur la plateforme.</span>
         </div>
+        {% elif request.query_params.get('success') == 'trouve' %}
+        <div class="alert-success">
+            <i class="fas fa-check-circle" style="font-size: 1.2rem;"></i>
+            <span><strong>Merci pour votre esprit de solidarité !</strong> L'objet trouvé a été enregistré et publié.</span>
+        </div>
+        {% endif %}
 
-        <div style="margin-top: 4rem; text-align: left;">
-            <h3 style="color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1.5rem;">Objets récents signalés</h3>
-            <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; color: #a0aec0;">
-                <p>Aucune annonce pour le moment.</p>
-                <p style="font-size: 0.9rem; margin-top: 0.5rem;">(Bientôt, les objets perdus et trouvés s'afficheront ici !)</p>
+        <!-- En-tête de bienvenue & Grands boutons -->
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <h2 style="font-size: 2.2rem; font-weight: 800; color: #1a1a2e; margin-bottom: 0.5rem;">
+                Que souhaitez-vous signaler, {{ user.prenom }} ?
+            </h2>
+            <p style="color: #64748b; font-size: 1.05rem;">
+                Choisissez une option pour publier une annonce visible par tous les étudiants et le personnel.
+            </p>
+
+            <div class="hub-grid" style="margin-top: 2rem;">
+                <a href="/perdu" class="hub-card card-perdu">
+                    <i class="fas fa-search" style="font-size: 2.8rem; margin-bottom: 1rem;"></i>
+                    J'ai perdu un objet
+                </a>
+                <a href="/trouve" class="hub-card card-trouve">
+                    <i class="fas fa-box-open" style="font-size: 2.8rem; margin-bottom: 1rem;"></i>
+                    J'ai trouvé un objet
+                </a>
             </div>
         </div>
+
+        <!-- Section des publications récentes -->
+        <div style="margin-top: 2rem;">
+            <div class="items-section-header">
+                <div>
+                    <h3><i class="fas fa-bullhorn" style="color: #c0392b; margin-right: 0.5rem;"></i> Objets récemment signalés</h3>
+                    <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.2rem;">Les dernières annonces publiées sur le campus de l'ENSAM Rabat</p>
+                </div>
+                {% if items %}
+                <a href="/annonces" class="see-more-link" style="font-size: 0.95rem;">
+                    Voir tout ({{ total_count }}) <i class="fas fa-arrow-right"></i>
+                </a>
+                {% endif %}
+            </div>
+
+            {% if items %}
+            <div class="items-grid">
+                {% for item in items %}
+                <div class="item-card-preview">
+                    <!-- Photo de l'objet (cliquable pour agrandir avec son ratio réel) -->
+                    <div class="item-media" {% if item.image_url %}onclick="openPhotoModal('{{ item.image_url }}', '{{ item.title }}')" style="cursor: pointer;" title="Cliquez pour agrandir la photo"{% endif %}>
+                        {% if item.image_url %}
+                        <img src="{{ item.image_url }}" alt="{{ item.title }}" loading="lazy">
+                        <span class="zoom-hint-badge"><i class="fas fa-expand"></i> Agrandir</span>
+                        {% else %}
+                        <div class="no-photo">
+                            <i class="fas fa-camera-slash"></i>
+                            <span>Aucune photo fournie</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Badge flottant Type -->
+                        {% if item.item_type == 'perdu' %}
+                        <span class="item-badge-floating badge-float-perdu">
+                            <i class="fas fa-search"></i> Perdu
+                        </span>
+                        {% else %}
+                        <span class="item-badge-floating badge-float-trouve">
+                            <i class="fas fa-box-open"></i> Trouvé
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Contenu de l'annonce -->
+                    <div class="item-card-body">
+                        <div class="item-card-title">{{ item.title }}</div>
+                        
+                        {% if item.location %}
+                        <div class="item-card-meta">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ item.location }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if item.date_event %}
+                        <div class="item-card-meta">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>{{ item.date_event }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if item.description %}
+                        <div class="item-card-desc">{{ item.description }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Pied de la carte avec l'auteur authentique et contact WhatsApp -->
+                    <div class="item-card-footer">
+                        <div class="author-chip">
+                            <i class="fas fa-user-circle"></i>
+                            <span>
+                                {% if item.author %}
+                                {{ item.author.prenom }} {{ item.author.nom }}
+                                {% else %}
+                                Étudiant ENSAM
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        {% if item.author and item.author.telephone %}
+                        <a href="{{ item.whatsapp_url }}" target="_blank" rel="noopener noreferrer" class="contact-whatsapp-btn" title="Envoyer un message WhatsApp à {{ item.author.prenom }}">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        {% elif item.author and item.author.email %}
+                        <a href="mailto:{{ item.author.email }}" class="contact-trigger" title="Envoyer un e-mail à {{ item.author.prenom }}">
+                            <i class="fas fa-envelope"></i> E-mail
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% else %}
+            <!-- État vide si aucune annonce n'existe encore -->
+            <div class="empty-state-box">
+                <div class="empty-state-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <div class="empty-state-title">Aucune annonce pour le moment</div>
+                <p class="empty-state-text">Soyez le premier à publier un objet perdu ou trouvé pour aider la communauté !</p>
+            </div>
+            {% endif %}
+        </div>
+
     </div>
 </main>
+
+<!-- Modal Lightbox Photo plein écran (ratio original) -->
+<div id="photoModal" class="photo-modal" onclick="closePhotoModal(event)">
+    <div class="modal-content-wrapper">
+        <button type="button" class="modal-close-btn" onclick="closePhotoModal(event)" aria-label="Fermer">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" src="" alt="Aperçu agrandi">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function openPhotoModal(imageUrl, title) {
+        const modal = document.getElementById('photoModal');
+        const img = document.getElementById('modalImage');
+        const caption = document.getElementById('modalCaption');
+        if (modal && img) {
+            img.src = imageUrl;
+            if (caption) caption.textContent = title || '';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closePhotoModal(event) {
+        if (event.target.id === 'photoModal' || event.target.closest('.modal-close-btn')) {
+            const modal = document.getElementById('photoModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('photoModal');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+</script>
 {% endblock %}

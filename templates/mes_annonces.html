@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}Mes Annonces - Lost & Found ENSAM Rabat{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/items.css">
+<style>
+    .mes-annonces-main {
+        background-color: #f4f6f9;
+        flex: 1;
+        padding: 3rem 1.5rem;
+    }
+    .mes-annonces-wrapper {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+    .mes-annonces-header {
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    .mes-annonces-header h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 0.4rem;
+    }
+    .mes-annonces-header p {
+        color: #64748b;
+        font-size: 1.02rem;
+    }
+    .btn-new-item {
+        background: #c0392b;
+        color: #fff;
+        padding: 0.75rem 1.4rem;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.92rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 12px rgba(192, 57, 43, 0.25);
+        transition: all 0.2s;
+    }
+    .btn-new-item:hover {
+        background: #a93226;
+        transform: translateY(-2px);
+    }
+    .alert-success {
+        background-color: #ecfdf5;
+        border-left: 4px solid #10b981;
+        color: #065f46;
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="mes-annonces-main">
+    <div class="mes-annonces-wrapper">
+
+        <!-- Lien de retour -->
+        <a href="/accueil" class="back-link">
+            <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+        </a>
+
+        <!-- Notification de suppression / résolution -->
+        {% if request.query_params.get('success') == 'deleted' %}
+        <div class="alert-success">
+            <i class="fas fa-check-circle" style="font-size: 1.2rem;"></i>
+            <span><strong>Annonce retirée !</strong> L'objet a été marqué comme résolu et n'apparaît plus sur la plateforme publique.</span>
+        </div>
+        {% endif %}
+
+        <!-- En-tête -->
+        <div class="mes-annonces-header">
+            <div>
+                <h2>Mes annonces publiées</h2>
+                <p>Consultez vos annonces en cours. Dès qu'un objet est rendu ou retrouvé, retirez-le pour garder la plateforme propre et à jour.</p>
+            </div>
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                <a href="/perdu" class="btn-new-item" style="background: #c0392b;">
+                    <i class="fas fa-search"></i> Déclarer un objet perdu
+                </a>
+                <a href="/trouve" class="btn-new-item" style="background: #276749;">
+                    <i class="fas fa-box-open"></i> Déclarer un objet trouvé
+                </a>
+            </div>
+        </div>
+
+        <!-- Liste de mes annonces -->
+        {% if items %}
+        <div class="items-grid">
+            {% for item in items %}
+            <div class="item-card-preview">
+                <!-- Photo (cliquable pour agrandir avec son ratio réel) -->
+                <div class="item-media" {% if item.image_url %}onclick="openPhotoModal('{{ item.image_url }}', '{{ item.title }}')" style="cursor: pointer;" title="Cliquez pour agrandir la photo"{% endif %}>
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}" loading="lazy">
+                    <span class="zoom-hint-badge"><i class="fas fa-expand"></i> Agrandir</span>
+                    {% else %}
+                    <div class="no-photo">
+                        <i class="fas fa-camera-slash"></i>
+                        <span>Aucune photo fournie</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Badge flottant Type -->
+                    {% if item.item_type == 'perdu' %}
+                    <span class="item-badge-floating badge-float-perdu">
+                        <i class="fas fa-search"></i> Perdu
+                    </span>
+                    {% else %}
+                    <span class="item-badge-floating badge-float-trouve">
+                        <i class="fas fa-box-open"></i> Trouvé
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- Contenu de l'annonce -->
+                <div class="item-card-body">
+                    <div class="item-card-title">{{ item.title }}</div>
+
+                    {% if item.location %}
+                    <div class="item-card-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Lieu : <strong>{{ item.location }}</strong></span>
+                    </div>
+                    {% endif %}
+
+                    {% if item.location_keeper and item.item_type == 'trouve' %}
+                    <div class="item-card-meta">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Déposé à : <strong>{{ item.location_keeper }}</strong></span>
+                    </div>
+                    {% endif %}
+
+                    {% if item.date_event %}
+                    <div class="item-card-meta">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Date : {{ item.date_event }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if item.description %}
+                    <div class="item-card-desc">{{ item.description }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Pied de la carte avec le bouton pour retirer l'annonce -->
+                <div class="item-card-footer">
+                    <div class="my-card-actions">
+                        <form action="/mes-annonces/{{ item.id }}/supprimer" method="post" onsubmit="return confirm('Confirmez-vous que cet objet a été restitué ou retrouvé ? L\'annonce sera définitivement retirée de la plateforme.');">
+                            {% if item.item_type == 'trouve' %}
+                            <button type="submit" class="btn-resolve-item" title="Marquer cet objet comme rendu et supprimer l'annonce">
+                                <i class="fas fa-check-double"></i> Objet remis au propriétaire
+                            </button>
+                            {% else %}
+                            <button type="submit" class="btn-resolve-item" style="background: #2563eb;" title="Marquer cet objet comme retrouvé et supprimer l'annonce">
+                                <i class="fas fa-check-circle"></i> Objet retrouvé ! Retirer
+                            </button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <!-- État vide -->
+        <div class="empty-state-box">
+            <div class="empty-state-icon">
+                <i class="fas fa-folder-open"></i>
+            </div>
+            <div class="empty-state-title">Vous n'avez aucune annonce active</div>
+            <p class="empty-state-text">Dès que vous publierez un objet perdu ou trouvé, il s'affichera ici pour que vous puissiez gérer sa restitution.</p>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/perdu" class="btn-new-item" style="background: #c0392b;">
+                    <i class="fas fa-search"></i> Signaler un objet perdu
+                </a>
+                <a href="/trouve" class="btn-new-item" style="background: #276749;">
+                    <i class="fas fa-box-open"></i> Signaler un objet trouvé
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</main>
+
+<!-- Modal Lightbox Photo plein écran (ratio original) -->
+<div id="photoModal" class="photo-modal" onclick="closePhotoModal(event)">
+    <div class="modal-content-wrapper">
+        <button type="button" class="modal-close-btn" onclick="closePhotoModal(event)" aria-label="Fermer">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" src="" alt="Aperçu agrandi">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function openPhotoModal(imageUrl, title) {
+        const modal = document.getElementById('photoModal');
+        const img = document.getElementById('modalImage');
+        const caption = document.getElementById('modalCaption');
+        if (modal && img) {
+            img.src = imageUrl;
+            if (caption) caption.textContent = title || '';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closePhotoModal(event) {
+        if (event.target.id === 'photoModal' || event.target.closest('.modal-close-btn')) {
+            const modal = document.getElementById('photoModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('photoModal');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+</script>
+{% endblock %}
+

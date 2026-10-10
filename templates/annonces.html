@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% block title %}Toutes les Annonces - Lost & Found ENSAM Rabat{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/items.css">
+<style>
+    .annonces-main {
+        background-color: #f4f6f9;
+        flex: 1;
+        padding: 3rem 1.5rem;
+    }
+    .annonces-wrapper {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+    .annonces-header {
+        margin-bottom: 2.2rem;
+    }
+    .annonces-header h2 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-bottom: 0.4rem;
+    }
+    .annonces-header p {
+        color: #64748b;
+        font-size: 1.05rem;
+    }
+
+    /* Barre d'onglets et de recherche */
+    .controls-bar {
+        background: #ffffff;
+        padding: 1rem 1.4rem;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+        border: 1px solid #f1f5f9;
+    }
+    .tabs-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .tab-btn {
+        padding: 0.55rem 1.1rem;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: #475569;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    .tab-btn:hover {
+        background: #f1f5f9;
+        color: #1e293b;
+    }
+    .tab-btn.active {
+        background: #1a1a2e;
+        color: #ffffff;
+        border-color: #1a1a2e;
+    }
+    .tab-btn.active-perdu {
+        background: #c0392b;
+        color: #ffffff;
+        border-color: #c0392b;
+    }
+    .tab-btn.active-trouve {
+        background: #276749;
+        color: #ffffff;
+        border-color: #276749;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: 1;
+        max-width: 360px;
+    }
+    .search-input-box {
+        display: flex;
+        align-items: center;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.45rem 0.8rem;
+        background: #f8fafc;
+        width: 100%;
+        gap: 0.5rem;
+    }
+    .search-input-box:focus-within {
+        border-color: #c0392b;
+        background: #fff;
+    }
+    .search-input-box input {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.88rem;
+        width: 100%;
+        color: #1e293b;
+    }
+    .search-btn {
+        background: #c0392b;
+        color: #fff;
+        border: none;
+        padding: 0.55rem 1rem;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .search-btn:hover {
+        background: #a93226;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="annonces-main">
+    <div class="annonces-wrapper">
+
+        <!-- En-tête -->
+        <div class="annonces-header">
+            <a href="/accueil" class="back-link">
+                <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+            </a>
+            <h2>Toutes les publications de la communauté</h2>
+            <p>Retrouvez l'intégralité des objets signalés par les étudiants de l'ENSAM Rabat. Contactez directement la personne ayant publié pour récupérer votre bien.</p>
+        </div>
+
+        <!-- Barre de filtres et recherche -->
+        <div class="controls-bar">
+            <!-- Onglets de type -->
+            <div class="tabs-group">
+                <a href="/annonces" class="tab-btn {% if current_type == 'tous' %}active{% endif %}">
+                    <i class="fas fa-layer-group"></i> Tout voir ({{ total_count }})
+                </a>
+                <a href="/annonces?type=perdu" class="tab-btn {% if current_type == 'perdu' %}active-perdu{% endif %}">
+                    <i class="fas fa-search"></i> Objets Perdus ({{ total_perdus }})
+                </a>
+                <a href="/annonces?type=trouve" class="tab-btn {% if current_type == 'trouve' %}active-trouve{% endif %}">
+                    <i class="fas fa-box-open"></i> Objets Trouvés ({{ total_trouves }})
+                </a>
+            </div>
+
+            <!-- Formulaire de recherche par mot-clé -->
+            <form action="/annonces" method="get" class="search-form">
+                {% if current_type != 'tous' %}
+                <input type="hidden" name="type" value="{{ current_type }}">
+                {% endif %}
+                <div class="search-input-box">
+                    <i class="fas fa-search" style="color: #94a3b8; font-size: 0.85rem;"></i>
+                    <input type="text" name="search" placeholder="Rechercher un objet, un lieu..." value="{{ search_query }}">
+                </div>
+                <button type="submit" class="search-btn">Filtrer</button>
+            </form>
+        </div>
+
+        <!-- Liste des annonces en grille -->
+        {% if items %}
+        <div class="items-grid">
+            {% for item in items %}
+            <div class="item-card-preview">
+                <!-- Photo de l'objet (cliquable pour agrandir avec son ratio réel) -->
+                <div class="item-media" {% if item.image_url %}onclick="openPhotoModal('{{ item.image_url }}', '{{ item.title }}')" style="cursor: pointer;" title="Cliquez pour agrandir la photo"{% endif %}>
+                    {% if item.image_url %}
+                    <img src="{{ item.image_url }}" alt="{{ item.title }}" loading="lazy">
+                    <span class="zoom-hint-badge"><i class="fas fa-expand"></i> Agrandir</span>
+                    {% else %}
+                    <div class="no-photo">
+                        <i class="fas fa-camera-slash"></i>
+                        <span>Aucune photo</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Badge flottant Type -->
+                    {% if item.item_type == 'perdu' %}
+                    <span class="item-badge-floating badge-float-perdu">
+                        <i class="fas fa-search"></i> Perdu
+                    </span>
+                    {% else %}
+                    <span class="item-badge-floating badge-float-trouve">
+                        <i class="fas fa-box-open"></i> Trouvé
+                    </span>
+                    {% endif %}
+                </div>
+
+                <!-- Contenu de l'annonce -->
+                <div class="item-card-body">
+                    <div class="item-card-title">{{ item.title }}</div>
+
+                    {% if item.location %}
+                    <div class="item-card-meta">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Lieu : <strong>{{ item.location }}</strong></span>
+                    </div>
+                    {% endif %}
+
+                    {% if item.location_keeper and item.item_type == 'trouve' %}
+                    <div class="item-card-meta">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>Déposé à : <strong>{{ item.location_keeper }}</strong></span>
+                    </div>
+                    {% endif %}
+
+                    {% if item.date_event %}
+                    <div class="item-card-meta">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Date : {{ item.date_event }}</span>
+                    </div>
+                    {% endif %}
+
+                    {% if item.description %}
+                    <div class="item-card-desc">{{ item.description }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Pied de carte avec l'auteur et contact WhatsApp -->
+                <div class="item-card-footer">
+                    <div class="author-chip">
+                        <i class="fas fa-user-circle"></i>
+                        <span>
+                            {% if item.author %}
+                            {{ item.author.prenom }} {{ item.author.nom }}
+                            {% else %}
+                            Étudiant ENSAM
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    {% if item.author and item.author.telephone %}
+                    <a href="{{ item.whatsapp_url }}" target="_blank" rel="noopener noreferrer" class="contact-whatsapp-btn" title="Envoyer un message WhatsApp à {{ item.author.prenom }}">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    {% elif item.author and item.author.email %}
+                    <a href="mailto:{{ item.author.email }}" class="contact-trigger" title="Envoyer un e-mail à {{ item.author.prenom }}">
+                        <i class="fas fa-envelope"></i> E-mail
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <!-- État vide -->
+        <div class="empty-state-box">
+            <div class="empty-state-icon">
+                <i class="fas fa-search-minus"></i>
+            </div>
+            <div class="empty-state-title">Aucune annonce trouvée</div>
+            <p class="empty-state-text">
+                {% if search_query %}
+                Aucun résultat ne correspond à votre recherche "{{ search_query }}". <a href="/annonces" style="color: #c0392b; font-weight: 700; text-decoration: underline;">Réinitialiser les filtres</a>
+                {% else %}
+                Aucun objet n'a encore été signalé dans cette catégorie.
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+</main>
+
+<!-- Modal Lightbox Photo plein écran (ratio original) -->
+<div id="photoModal" class="photo-modal" onclick="closePhotoModal(event)">
+    <div class="modal-content-wrapper">
+        <button type="button" class="modal-close-btn" onclick="closePhotoModal(event)" aria-label="Fermer">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="modalImage" src="" alt="Aperçu agrandi">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function openPhotoModal(imageUrl, title) {
+        const modal = document.getElementById('photoModal');
+        const img = document.getElementById('modalImage');
+        const caption = document.getElementById('modalCaption');
+        if (modal && img) {
+            img.src = imageUrl;
+            if (caption) caption.textContent = title || '';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closePhotoModal(event) {
+        if (event.target.id === 'photoModal' || event.target.closest('.modal-close-btn')) {
+            const modal = document.getElementById('photoModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('photoModal');
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+</script>
+{% endblock %}
+
+

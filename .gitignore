@@ -27,3 +27,7 @@ Thumbs.db
 # Bases de données SQLite locales
 *.db
 *.sqlite3
+
+# Fichiers uploadés par les utilisateurs
+static/uploads/*
+!static/uploads/.gitkeep

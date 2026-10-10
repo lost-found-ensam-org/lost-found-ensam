@@ -26,7 +26,14 @@
 
         <!-- Carte de formulaire -->
         <div class="item-card">
-            <form action="/accueil" method="get">
+            {% if error %}
+            <div class="alert-error" style="margin-bottom: 1.5rem;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span>{{ error }}</span>
+            </div>
+            {% endif %}
+
+            <form action="/perdu" method="post" enctype="multipart/form-data">
 
                 <!-- Section 1 : Informations principales -->
                 <h3 class="form-section-title">
